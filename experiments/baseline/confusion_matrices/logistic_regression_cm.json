@@ -1,0 +1,35 @@
+{
+  "model": "logistic_regression",
+  "labels": [
+    "Low",
+    "Moderate",
+    "High",
+    "Critical"
+  ],
+  "matrix": [
+    [
+      0,
+      0,
+      0,
+      4
+    ],
+    [
+      2,
+      1,
+      0,
+      1
+    ],
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      1,
+      2,
+      0,
+      2
+    ]
+  ]
+}

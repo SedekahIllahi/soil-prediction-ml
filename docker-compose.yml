@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  ml:
+    build:
+      context: .
+      dockerfile: docker/ml.Dockerfile
+    volumes:
+      - .:/app
+      - ./storage:/app/storage
+    env_file:
+      - .env
+    environment:
+      # Pass through any specific overrides if needed
+      - PYTHONPATH=/app
+    # Default command is overridden when you want to run tests instead:
+    # docker compose run ml pytest tests/ml/

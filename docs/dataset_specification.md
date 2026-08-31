@@ -497,7 +497,7 @@ These decisions are **final for Phase 1+ implementation**. Changes require expli
 | **D02** | **Project Scope** | "Urban Road Collapse Risk Prediction" — the system predicts road segment collapse risk using ground and infrastructure condition indicators. Not "general soil risk" or "ground stability." All documentation must use this scope. |
 | **D03** | **Target Variable** | `collapse_risk_level` — string. Exact classes: `Low`, `Moderate`, `High`, `Critical`. Case-sensitive. Must be validated at ingestion. |
 | **D04** | **Number of Classes** | **4 classes.** Do NOT merge Critical into High. PRD must be updated to reflect 4 classes. |
-| **D05** | **Feature Policy** | 34 model features as specified in Part 9. Remove `spatial_vulnerability_index`, `historical_collapse_count`, `traffic_load_index`, `pipe_leakage_index`. Retain 6 caution features with documented assumptions. |
+| **D05** | **Feature Policy** | 34 model features as specified in Part 9 (29 KEEP + 5 KEEP-CAUTION). Remove `spatial_vulnerability_index`, `historical_collapse_count`, `traffic_load_index`, `pipe_leakage_index`. Retain 5 caution features (`pavement_condition_index`, `soil_settlement_mm`, `land_subsidence_rate_mm_year`, `sewer_condition_index`, `distance_to_previous_collapse_m`) with documented assumptions. |
 | **D06** | **Geographic Feature Policy** | `latitude` and `longitude` are **excluded from ML model features**. They are retained in the dataset and database for map visualization only. `segment_id` is an identifier, excluded from ML. |
 | **D07** | **Leakage Policy** | `spatial_vulnerability_index` removed as leakage. `historical_collapse_count` removed as temporally unavailable. All KEEP-CAUTION features must have documented assumptions in ML pipeline code. |
 | **D08** | **Split Strategy** | Random stratified 70/15/15 split (stratify by `collapse_risk_level`). Fixed random seed (from `RANDOM_SEED` environment variable). No spatial grouping required — no spatial autocorrelation detected in this dataset. |
@@ -529,3 +529,4 @@ The following project files must be updated as a consequence of these decisions:
 
 ### Changelog
 - **2026-08-28 (Phase 1 start):** Corrected bookkeeping inconsistencies in feature counts (removed duplicate `temperature_variation_c` from Urban section, removed duplicate `pavement_condition_index` from KEEP-CAUTION list). Correct total feature count verified as 34.
+- **2026-08-31 (Phase 3.1 Audit):** Reconciled D05 decision text from '6 caution features' to the exact verified count of '5 caution features' (29 KEEP + 5 KEEP-CAUTION = 34 total model features).

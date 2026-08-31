@@ -1,0 +1,441 @@
+{
+  "dataset": {
+    "path": "D:\\Project\\soil-ml-prediction\\storage\\datasets\\urban_road_collapse_risk_dataset.csv",
+    "total_rows": 15000,
+    "train_rows": 10500,
+    "val_rows": 2250,
+    "test_rows": 2250,
+    "target_classes": [
+      "Low",
+      "Moderate",
+      "High",
+      "Critical"
+    ]
+  },
+  "ranking": {
+    "best_model_name": "logistic_regression",
+    "primary_metric": "weighted_f1",
+    "secondary_metric": "high_risk_recall",
+    "rankings": [
+      {
+        "rank": 1,
+        "model_name": "logistic_regression",
+        "weighted_f1": 0.7353,
+        "macro_f1": 0.7354,
+        "accuracy": 0.7338,
+        "high_risk_recall": 0.6519,
+        "training_time_seconds": 0.114
+      },
+      {
+        "rank": 2,
+        "model_name": "svm",
+        "weighted_f1": 0.7269,
+        "macro_f1": 0.727,
+        "accuracy": 0.7249,
+        "high_risk_recall": 0.6483,
+        "training_time_seconds": 19.753
+      },
+      {
+        "rank": 3,
+        "model_name": "xgboost",
+        "weighted_f1": 0.6856,
+        "macro_f1": 0.6857,
+        "accuracy": 0.6827,
+        "high_risk_recall": 0.5879,
+        "training_time_seconds": 1.936
+      },
+      {
+        "rank": 4,
+        "model_name": "random_forest",
+        "weighted_f1": 0.6761,
+        "macro_f1": 0.6762,
+        "accuracy": 0.6742,
+        "high_risk_recall": 0.5808,
+        "training_time_seconds": 0.818
+      },
+      {
+        "rank": 5,
+        "model_name": "decision_tree",
+        "weighted_f1": 0.5427,
+        "macro_f1": 0.5428,
+        "accuracy": 0.5413,
+        "high_risk_recall": 0.4032,
+        "training_time_seconds": 0.384
+      }
+    ]
+  },
+  "validation_evaluations": {
+    "logistic_regression": {
+      "model_name": "logistic_regression",
+      "accuracy": 0.7337777777777778,
+      "macro_precision": 0.7372935231078321,
+      "macro_recall": 0.7338506539066895,
+      "macro_f1": 0.7353522310932783,
+      "weighted_f1": 0.7352691919933703,
+      "per_class": {
+        "Low": {
+          "precision": 0.8528864059590316,
+          "recall": 0.8149466192170819,
+          "f1": 0.8334849863512284
+        },
+        "Moderate": {
+          "precision": 0.6427320490367776,
+          "recall": 0.6518650088809946,
+          "f1": 0.6472663139329806
+        },
+        "High": {
+          "precision": 0.6220338983050847,
+          "recall": 0.6518650088809946,
+          "f1": 0.6366001734605378
+        },
+        "Critical": {
+          "precision": 0.8315217391304348,
+          "recall": 0.8167259786476868,
+          "f1": 0.8240574506283662
+        }
+      },
+      "confusion_matrix": [
+        [
+          458,
+          101,
+          3,
+          0
+        ],
+        [
+          78,
+          367,
+          118,
+          0
+        ],
+        [
+          1,
+          102,
+          367,
+          93
+        ],
+        [
+          0,
+          1,
+          102,
+          459
+        ]
+      ],
+      "class_labels": [
+        "Low",
+        "Moderate",
+        "High",
+        "Critical"
+      ]
+    },
+    "decision_tree": {
+      "model_name": "decision_tree",
+      "accuracy": 0.5413333333333333,
+      "macro_precision": 0.5442594347270263,
+      "macro_recall": 0.5414396376807014,
+      "macro_f1": 0.542775542141961,
+      "weighted_f1": 0.5426638743224864,
+      "per_class": {
+        "Low": {
+          "precision": 0.6943942133815552,
+          "recall": 0.6832740213523132,
+          "f1": 0.6887892376681615
+        },
+        "Moderate": {
+          "precision": 0.42758620689655175,
+          "recall": 0.4404973357015986,
+          "f1": 0.4339457567804024
+        },
+        "High": {
+          "precision": 0.3975481611208406,
+          "recall": 0.40319715808170514,
+          "f1": 0.400352733686067
+        },
+        "Critical": {
+          "precision": 0.6575091575091575,
+          "recall": 0.6387900355871886,
+          "f1": 0.648014440433213
+        }
+      },
+      "confusion_matrix": [
+        [
+          384,
+          136,
+          38,
+          4
+        ],
+        [
+          120,
+          248,
+          153,
+          42
+        ],
+        [
+          42,
+          153,
+          227,
+          141
+        ],
+        [
+          7,
+          43,
+          153,
+          359
+        ]
+      ],
+      "class_labels": [
+        "Low",
+        "Moderate",
+        "High",
+        "Critical"
+      ]
+    },
+    "random_forest": {
+      "model_name": "random_forest",
+      "accuracy": 0.6742222222222222,
+      "macro_precision": 0.6786929468741592,
+      "macro_recall": 0.6743171747691257,
+      "macro_f1": 0.6762428343004482,
+      "weighted_f1": 0.6761379617085234,
+      "per_class": {
+        "Low": {
+          "precision": 0.8191881918819188,
+          "recall": 0.7900355871886121,
+          "f1": 0.8043478260869565
+        },
+        "Moderate": {
+          "precision": 0.5551601423487544,
+          "recall": 0.5541740674955595,
+          "f1": 0.5546666666666666
+        },
+        "High": {
+          "precision": 0.5440931780366056,
+          "recall": 0.5808170515097691,
+          "f1": 0.5618556701030928
+        },
+        "Critical": {
+          "precision": 0.7963302752293578,
+          "recall": 0.7722419928825622,
+          "f1": 0.7841011743450768
+        }
+      },
+      "confusion_matrix": [
+        [
+          444,
+          113,
+          5,
+          0
+        ],
+        [
+          94,
+          312,
+          149,
+          8
+        ],
+        [
+          4,
+          129,
+          327,
+          103
+        ],
+        [
+          0,
+          8,
+          120,
+          434
+        ]
+      ],
+      "class_labels": [
+        "Low",
+        "Moderate",
+        "High",
+        "Critical"
+      ]
+    },
+    "xgboost": {
+      "model_name": "xgboost",
+      "accuracy": 0.6826666666666666,
+      "macro_precision": 0.6895632100377911,
+      "macro_recall": 0.6827572802032831,
+      "macro_f1": 0.6856941610047484,
+      "weighted_f1": 0.6855886366595775,
+      "per_class": {
+        "Low": {
+          "precision": 0.8380414312617702,
+          "recall": 0.791814946619217,
+          "f1": 0.8142726440988106
+        },
+        "Moderate": {
+          "precision": 0.5617391304347826,
+          "recall": 0.5737122557726465,
+          "f1": 0.5676625659050967
+        },
+        "High": {
+          "precision": 0.5462046204620462,
+          "recall": 0.5879218472468917,
+          "f1": 0.5662959794696322
+        },
+        "Critical": {
+          "precision": 0.8122676579925651,
+          "recall": 0.7775800711743772,
+          "f1": 0.7945454545454546
+        }
+      },
+      "confusion_matrix": [
+        [
+          445,
+          111,
+          6,
+          0
+        ],
+        [
+          83,
+          323,
+          151,
+          6
+        ],
+        [
+          3,
+          134,
+          331,
+          95
+        ],
+        [
+          0,
+          7,
+          118,
+          437
+        ]
+      ],
+      "class_labels": [
+        "Low",
+        "Moderate",
+        "High",
+        "Critical"
+      ]
+    },
+    "svm": {
+      "model_name": "svm",
+      "accuracy": 0.7248888888888889,
+      "macro_precision": 0.7296894908496322,
+      "macro_recall": 0.7249585974981512,
+      "macro_f1": 0.7269726582172408,
+      "weighted_f1": 0.726889165612835,
+      "per_class": {
+        "Low": {
+          "precision": 0.8436911487758946,
+          "recall": 0.797153024911032,
+          "f1": 0.8197621225983531
+        },
+        "Moderate": {
+          "precision": 0.6183986371379898,
+          "recall": 0.6447602131438721,
+          "f1": 0.6313043478260869
+        },
+        "High": {
+          "precision": 0.6218057921635435,
+          "recall": 0.6483126110124334,
+          "f1": 0.6347826086956522
+        },
+        "Critical": {
+          "precision": 0.8348623853211009,
+          "recall": 0.8096085409252669,
+          "f1": 0.8220415537488708
+        }
+      },
+      "confusion_matrix": [
+        [
+          448,
+          113,
+          1,
+          0
+        ],
+        [
+          82,
+          363,
+          115,
+          3
+        ],
+        [
+          1,
+          110,
+          365,
+          87
+        ],
+        [
+          0,
+          1,
+          106,
+          455
+        ]
+      ],
+      "class_labels": [
+        "Low",
+        "Moderate",
+        "High",
+        "Critical"
+      ]
+    }
+  },
+  "best_model_test_evaluation": {
+    "model_name": "logistic_regression",
+    "accuracy": 0.7573333333333333,
+    "macro_precision": 0.7621562107658505,
+    "macro_recall": 0.757274672414556,
+    "macro_f1": 0.7592055912969806,
+    "weighted_f1": 0.7592808052794788,
+    "per_class": {
+      "Low": {
+        "precision": 0.8549905838041432,
+        "recall": 0.8063943161634103,
+        "f1": 0.829981718464351
+      },
+      "Moderate": {
+        "precision": 0.6510416666666666,
+        "recall": 0.6672597864768683,
+        "f1": 0.6590509666080844
+      },
+      "High": {
+        "precision": 0.6666666666666666,
+        "recall": 0.7153024911032029,
+        "f1": 0.6901287553648069
+      },
+      "Critical": {
+        "precision": 0.8759259259259259,
+        "recall": 0.8401420959147424,
+        "f1": 0.85766092475068
+      }
+    },
+    "confusion_matrix": [
+      [
+        454,
+        106,
+        3,
+        0
+      ],
+      [
+        77,
+        375,
+        108,
+        2
+      ],
+      [
+        0,
+        95,
+        402,
+        65
+      ],
+      [
+        0,
+        0,
+        90,
+        473
+      ]
+    ],
+    "class_labels": [
+      "Low",
+      "Moderate",
+      "High",
+      "Critical"
+    ]
+  }
+}

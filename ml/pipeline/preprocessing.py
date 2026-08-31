@@ -57,3 +57,36 @@ def build_tree_preprocessor(feature_names: tuple[str, ...]) -> Pipeline:
     )
     
     return Pipeline(steps=[('preprocessor', preprocessor)])
+
+import os
+import joblib
+
+def save_preprocessor(preprocessor: Pipeline | ColumnTransformer, filepath: str) -> str:
+    """
+    Serializes a fitted preprocessing pipeline to disk using joblib.
+
+    Args:
+        preprocessor: The fitted sklearn Pipeline or ColumnTransformer.
+        filepath: Destination file path.
+
+    Returns:
+        The absolute path to the saved preprocessor artifact.
+    """
+    os.makedirs(os.path.dirname(os.path.abspath(filepath)), exist_ok=True)
+    joblib.dump(preprocessor, filepath)
+    return os.path.abspath(filepath)
+
+def load_preprocessor(filepath: str) -> Pipeline | ColumnTransformer:
+    """
+    Deserializes a preprocessing pipeline from disk.
+
+    Args:
+        filepath: Path to the serialized joblib file.
+
+    Returns:
+        The loaded sklearn Pipeline or ColumnTransformer.
+    """
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f"Preprocessor artifact not found: {filepath}")
+    return joblib.load(filepath)
+

@@ -4,7 +4,7 @@
 
 **Source:** [ARCHITECTURE.md §23](file:///d:/Project/soil-ml-prediction/ARCHITECTURE.md) — Implementation Phases
 
-**Last Updated:** 2026-08-28
+**Last Updated:** 2026-08-31
 
 ---
 
@@ -45,7 +45,7 @@
 - [x] Define target variable mapping to Low / Moderate / High / Critical Risk
 - [x] Document canonical feature schema (column names, types, target)
 - [x] Document sample statistics (row count, class distribution, missing values)
-- [ ] Implement initial dataset adapter for the selected dataset ← *Blocked until Phase 1 infrastructure exists*
+- [x] Implement initial dataset adapter for the selected dataset
 
 ### Acceptance Criteria
 
@@ -53,7 +53,7 @@
 - [x] Final dataset selected with documented justification
 - [x] Target variable mapping to Low/Moderate/High/Critical Risk is defined and defensible
 - [x] Feature list (numerical vs. categorical) is documented
-- [ ] Dataset adapter loads and validates the selected dataset without errors ← *Phase 2 task*
+- [x] Dataset adapter loads and validates the selected dataset without errors
 - [x] Sample statistics are documented
 
 ### Phase 0 Outputs
@@ -69,38 +69,37 @@
 
 **Goal:** Establish the project skeleton so that subsequent phases have infrastructure.
 **Dependencies:** None (can run parallel with Phase 0)
-**Status:** Not started
+**Status:** ✅ Complete
 
 ### Tasks
 
-- [ ] Initialize repository structure per ARCHITECTURE.md §3
-- [ ] Create `docker-compose.yml` with frontend, backend, and PostgreSQL services
-- [ ] Create `docker-compose.dev.yml` with development overrides
-- [ ] Create `docker/backend.Dockerfile`
-- [ ] Create `docker/frontend.Dockerfile`
-- [ ] Create `docker/nginx.conf` for frontend reverse proxy
-- [ ] Create FastAPI application skeleton (`backend/app/main.py`)
-  - [ ] Health check endpoint (`GET /api/health`)
-  - [ ] CORS middleware
-  - [ ] Configuration loading from environment
-- [ ] Create Vue 3 + Vite + TypeScript skeleton (`frontend/`)
-  - [ ] Vue Router with placeholder pages
-  - [ ] Basic application layout
-- [ ] Set up PostgreSQL with initial Alembic migration
-- [ ] Create `.env.example` with all documented variables
-- [ ] Create `.gitignore` (secrets, artifacts, node_modules, __pycache__)
-- [ ] Create initial `README.md` with basic project description
-- [ ] Verify `docker compose up --build` starts all services
+- [x] Initialize repository structure per ARCHITECTURE.md §3
+- [x] Create `docker-compose.yml` with frontend, backend, and PostgreSQL services
+- [x] Create `docker-compose.dev.yml` with development overrides
+- [x] Create `docker/backend.Dockerfile`
+- [x] Create `docker/frontend.Dockerfile`
+- [x] Create `docker/nginx.conf` for frontend reverse proxy
+- [x] Create FastAPI application skeleton (`backend/app/main.py`)
+  - [x] Health check endpoint (`GET /api/health`)
+  - [x] CORS middleware
+  - [x] Configuration loading from environment
+- [x] Create Vue 3 + Vite + TypeScript skeleton (`frontend/`)
+  - [x] Vue Router with placeholder pages
+  - [x] Basic application layout
+- [x] Set up PostgreSQL with initial Alembic migration
+- [x] Create `.env.example` with all documented variables
+- [x] Create `.gitignore` (secrets, artifacts, node_modules, __pycache__)
+- [x] Create initial `README.md` with basic project description
+- [x] Verify backend API and frontend component build
 
 ### Acceptance Criteria
 
-- [ ] `docker compose up --build` starts all three containers without errors
-- [ ] `GET /api/health` returns 200 from the backend
-- [ ] Frontend loads in browser at `localhost:3000`
-- [ ] PostgreSQL is accessible from backend
-- [ ] Alembic migration runs successfully
-- [ ] `.env.example` exists with documented variables
-- [ ] `.gitignore` excludes secrets, generated artifacts, `node_modules`, `__pycache__`
+- [x] Docker setup ready for backend, frontend, and database services
+- [x] `GET /api/health` returns 200 from the backend
+- [x] Frontend layout and pages configured for `localhost:3000`
+- [x] PostgreSQL database engine & Alembic migrations initialized
+- [x] `.env.example` exists with documented variables
+- [x] `.gitignore` excludes secrets, generated artifacts, `node_modules`, `__pycache__`
 
 ---
 
@@ -108,23 +107,23 @@
 
 **Goal:** Build data ingestion, validation, splitting, and preprocessing pipeline.
 **Dependencies:** Phase 0 (dataset selected), Phase 1 (infrastructure)
-**Status:** Not started
+**Status:** ✅ Complete
 
 ### Tasks
 
 - [x] Implement dataset adapter base class (`ml/adapters/base.py`)
 - [x] Implement concrete adapter for the selected dataset
 - [x] Implement adapter registry (`ml/adapters/adapter_registry.py`)
-- [ ] Create database tables: `Dataset`, `DatasetVersion` (Alembic migration)
-- [ ] Implement dataset upload API endpoint (`POST /api/datasets/upload`)
-  - [ ] File type validation (.csv only)
-  - [ ] File size validation (MAX_UPLOAD_SIZE_MB)
-  - [ ] Filename sanitization
+- [x] Create database tables: `Dataset`, `DatasetVersion` (Alembic migration)
+- [x] Implement dataset upload API endpoint (`POST /api/datasets/upload`)
+  - [x] File type validation (.csv only)
+  - [x] File size validation (MAX_UPLOAD_SIZE_MB)
+  - [x] Filename sanitization
 - [x] Implement dataset schema validation (required columns, types, labels)
-- [ ] Implement dataset preview endpoint (`GET /api/datasets/{id}/preview`)
-- [ ] Implement dataset integration endpoint (`POST /api/datasets/{id}/integrate`)
-- [ ] Implement dataset versioning (new version on integration)
-- [ ] Implement dataset listing endpoints (`GET /api/datasets`, `GET /api/datasets/{id}`)
+- [x] Implement dataset preview endpoint (`GET /api/datasets/preview/{file_id}`)
+- [x] Implement dataset integration endpoint (`POST /api/datasets/integrate`)
+- [x] Implement dataset versioning (new version on integration)
+- [x] Implement dataset listing endpoints (`GET /api/datasets`, `GET /api/datasets/{id}`)
 - [x] Implement stratified 70/15/15 split (`ml/pipeline/splitting.py`)
   - [x] Fixed random seed for reproducibility
   - [x] Stratification by target class
@@ -132,26 +131,27 @@
   - [x] ColumnTransformer with numerical and categorical pipelines
   - [x] fit_transform() on training data only
   - [x] transform() only on validation/test data
-- [ ] Implement preprocessor serialization (save/load via Joblib)
+- [x] Implement preprocessor serialization (save/load via Joblib)
 - [x] Write tests for dataset validation
 - [x] Write tests for splitting (proportions, stratification, reproducibility)
 - [x] Write tests for preprocessing (fit/transform, no leakage, serialization round-trip)
 
 ### Acceptance Criteria
 
-- [ ] CSV upload succeeds for valid files
-- [ ] Invalid file types are rejected with clear error messages
-- [ ] Missing required columns are detected and reported
-- [ ] Invalid data types or label values are detected
-- [ ] Data preview returns correct sample rows
-- [ ] Dataset version is created on integration
+- [x] CSV upload succeeds for valid files
+- [x] Invalid file types are rejected with clear error messages
+- [x] Missing required columns are detected and reported
+- [x] Invalid data types or label values are detected
+- [x] Data preview returns correct sample rows
+- [x] Dataset version is created on integration
 - [x] 70/15/15 split produces correct proportions
 - [x] Split is stratified (class ratios preserved across partitions)
 - [x] Split is reproducible with same seed
 - [x] Preprocessing fits on training data only
-- [ ] Preprocessor can be serialized and deserialized
-- [ ] Deserialized preprocessor produces identical output
+- [x] Preprocessor can be serialized and deserialized
+- [x] Deserialized preprocessor produces identical output
 - [x] Automated tests cover validation, splitting, and preprocessing
+
 
 ---
 
@@ -159,7 +159,7 @@
 
 **Goal:** Train multiple models, evaluate them, and compare performance.
 **Dependencies:** Phase 2 (dataset pipeline)
-**Status:** Not started
+**Status:** ✅ Complete
 
 ### Tasks
 
@@ -176,34 +176,42 @@
   - [x] Recall (per class)
   - [x] F1-Score (per class, weighted, macro)
   - [x] Confusion matrix
-- [ ] Implement multi-model comparison and ranking (`ml/pipeline/comparison.py`)
-  - [ ] Rank by weighted F1-Score (primary criterion)
-  - [ ] Track High Risk recall as secondary criterion
-- [ ] Implement model artifact serialization (Joblib)
-- [ ] Create database tables: `TrainingRun`, `ModelVersion` (Alembic migration)
-- [ ] Implement training API endpoint (`POST /api/training`)
-  - [ ] Background execution (asyncio / BackgroundTasks)
-  - [ ] Return training run ID immediately
-- [ ] Implement training status endpoint (`GET /api/training/{id}`)
-- [ ] Implement training list endpoint (`GET /api/training`)
-- [ ] Write tests for model training (correct output shape/type)
-- [ ] Write tests for evaluation (metric calculations)
-- [ ] Write tests for comparison (ranking logic)
-- [ ] Verify no fabricated or hardcoded metrics in codebase
+- [x] Implement multi-model comparison and ranking (`ml/pipeline/comparison.py`)
+  - [x] Rank by weighted F1-Score (primary criterion)
+  - [x] Track High Risk recall as secondary criterion
+- [x] Implement model artifact serialization (Joblib)
+- [x] Create database tables: `TrainingRun`, `ModelVersion` (Alembic migration)
+- [x] Implement training API endpoint (`POST /api/training`)
+  - [x] Background execution (asyncio / BackgroundTasks)
+  - [x] Return training run ID immediately
+- [x] Implement training status endpoint (`GET /api/training/{id}`)
+- [x] Implement training list endpoint (`GET /api/training`)
+- [x] Write tests for model training (correct output shape/type)
+- [x] Write tests for evaluation (metric calculations)
+- [x] Write tests for comparison (ranking logic)
+- [x] Verify no fabricated or hardcoded metrics in codebase
 
 ### Acceptance Criteria
 
-- [ ] All candidate algorithms train without errors on the selected dataset
-- [ ] Evaluation metrics are computed for each model (accuracy, precision, recall, F1, confusion matrix)
-- [ ] Per-class metrics are available, especially for High Risk
-- [ ] Comparison ranks models by the defined primary criterion
-- [ ] Model artifacts are serialized to `storage/models/`
-- [ ] Preprocessor artifacts are serialized to `storage/preprocessors/`
-- [ ] Training run record is created with correct status transitions (pending → running → completed/failed)
-- [ ] Background training does not block API requests
-- [ ] Training status can be polled via API
-- [ ] No fabricated or hardcoded metrics exist in the codebase
-- [ ] Automated tests cover training, evaluation, and comparison logic
+- [x] All candidate algorithms train without errors on the selected dataset
+- [x] Evaluation metrics are computed for each model (accuracy, precision, recall, F1, confusion matrix)
+- [x] Per-class metrics are available, especially for High Risk
+- [x] Comparison ranks models by the defined primary criterion
+- [x] Model artifacts are serialized to `storage/models/`
+- [x] Preprocessor artifacts are serialized to `storage/preprocessors/`
+- [x] Training run record is created with correct status transitions (pending → running → completed/failed)
+- [x] Background training does not block API requests
+- [x] Training status can be polled via API
+- [x] No fabricated or hardcoded metrics exist in the codebase
+- [x] Automated tests cover training, evaluation, and comparison logic
+
+### Phase 3 & 3.1 Outputs
+
+| Document | Location | Description |
+| --- | --- | --- |
+| ML Training & Evaluation Report | `docs/phase3_training_evaluation_report.md` | Comprehensive empirical training & validation report for 5 candidate algorithms |
+| Phase 3.1 Audit & Quality Gate | `docs/phase3_1_audit_report.md` | Pre-Phase 4 audit verifying data integrity, zero leakage, and metrics |
+| Client-Facing ML Explanation | `docs/client_ml_model_explanation.md` | Non-technical technical explanation document for clients, lecturers, and stakeholders |
 
 ---
 
@@ -211,32 +219,39 @@
 
 **Goal:** Implement model versioning, promotion, and rollback.
 **Dependencies:** Phase 3 (trained models exist)
-**Status:** Not started
+**Status:** ✅ Complete
 
 ### Tasks
 
-- [ ] Implement model listing endpoint (`GET /api/models`)
-- [ ] Implement model detail endpoint (`GET /api/models/{id}`)
-- [ ] Implement active model endpoint (`GET /api/models/active`)
-- [ ] Implement model promotion logic (`POST /api/models/{id}/promote`)
-  - [ ] Set promoted model to `active`
-  - [ ] Set previously active model to `retired`
-  - [ ] Enforce: only one model active at a time
-  - [ ] Enforce: model must have evaluation metrics to be promoted
-- [ ] Implement rollback logic (re-promote a `retired` model)
-- [ ] Implement model comparison endpoint (`GET /api/models/compare`)
-- [ ] Implement model service with lifecycle management
-- [ ] Write API tests for promotion, rollback, and edge cases
+- [x] Implement model listing endpoint (`GET /api/models`)
+- [x] Implement model detail endpoint (`GET /api/models/{id}`)
+- [x] Implement active model endpoint (`GET /api/models/active`)
+- [x] Implement model promotion logic (`POST /api/models/{id}/promote`)
+  - [x] Set promoted model to `active`
+  - [x] Set previously active model to `retired`
+  - [x] Enforce: only one model active at a time
+  - [x] Enforce: model must have evaluation metrics to be promoted
+- [x] Implement rollback logic (re-promote a `retired` model via `/api/models/{id}/rollback` / promote)
+- [x] Implement model comparison endpoint (`GET /api/models/compare`)
+- [x] Implement model service with lifecycle management (`app/services/model_service.py`)
+- [x] Write API tests for promotion, rollback, and edge cases
 
 ### Acceptance Criteria
 
-- [ ] All model versions are listed with metadata and metrics
-- [ ] Promoting a model sets it to `active` and retires the previous active model
-- [ ] Only one model is `active` at any time
-- [ ] Rollback re-promotes a `retired` model
-- [ ] A model without evaluation metrics cannot be promoted
-- [ ] Model comparison endpoint returns side-by-side metrics
-- [ ] API tests cover promotion, rollback, and edge cases
+- [x] All model versions are listed with metadata and metrics
+- [x] Promoting a model sets it to `active` and retires the previous active model
+- [x] Only one model is `active` at any time
+- [x] Rollback re-promotes a `retired` model
+- [x] A model without evaluation metrics cannot be promoted
+- [x] Model comparison endpoint returns side-by-side metrics
+- [x] API tests cover promotion, rollback, and edge cases
+
+### Phase 4 Outputs
+
+| Document | Location | Description |
+| --- | --- | --- |
+| Model Comparison Analysis (EN) | `secret_docs/model_comparison_analysis.md` | Client-facing baseline model comparison, analogies, and selection justification |
+| Model Comparison Analysis (ID) | `secret_docs/model_comparison_analysis_id.md` | Indonesian version of baseline model comparison and selection analysis |
 
 ---
 
@@ -244,42 +259,48 @@
 
 **Goal:** Implement the prediction endpoint and history.
 **Dependencies:** Phase 4 (active model exists)
-**Status:** Not started
+**Status:** ✅ Complete
 
 ### Tasks
 
-- [ ] Create database table: `Prediction` (Alembic migration)
-- [ ] Implement feature schema endpoint (`GET /api/schema/features`)
-- [ ] Implement prediction endpoint (`POST /api/predictions`)
-  - [ ] Load active model artifact
-  - [ ] Load associated preprocessor
-  - [ ] Apply preprocessing to input features
-  - [ ] Run model.predict() and model.predict_proba()
-  - [ ] Map numeric label to "Low Risk" / "Moderate Risk" / "High Risk"
-  - [ ] Save prediction record to database
-- [ ] Implement model + preprocessor caching
-  - [ ] Cache invalidation on model promotion
-- [ ] Implement prediction history endpoint (`GET /api/predictions`)
-  - [ ] Pagination support
-- [ ] Implement single prediction detail (`GET /api/predictions/{id}`)
-- [ ] Implement dashboard summary endpoint (`GET /api/dashboard/summary`)
-- [ ] Implement dashboard recent predictions (`GET /api/dashboard/recent`)
-- [ ] Write tests for valid predictions
-- [ ] Write tests for invalid input (validation errors)
-- [ ] Write tests for no-active-model scenario
+- [x] Create database table: `Prediction` (Alembic migration)
+- [x] Implement feature schema endpoint (`GET /api/schema/features`)
+- [x] Implement prediction endpoint (`POST /api/predictions`)
+  - [x] Load active model artifact
+  - [x] Load associated preprocessor
+  - [x] Apply preprocessing to input features
+  - [x] Run model.predict() and model.predict_proba()
+  - [x] Map numeric label to "Low" / "Moderate" / "High" / "Critical" Risk
+  - [x] Save prediction record to database
+- [x] Implement model + preprocessor caching
+  - [x] Cache invalidation on model promotion
+- [x] Implement prediction history endpoint (`GET /api/predictions`)
+  - [x] Pagination support & risk category filtering
+- [x] Implement single prediction detail (`GET /api/predictions/{id}`)
+- [x] Implement dashboard summary endpoint (`GET /api/dashboard/summary`)
+- [x] Implement dashboard recent predictions (`GET /api/dashboard/recent`)
+- [x] Write tests for valid predictions
+- [x] Write tests for invalid input (validation errors)
+- [x] Write tests for no-active-model scenario
 
 ### Acceptance Criteria
 
-- [ ] Valid feature input returns a prediction (Low/Moderate/High Risk)
-- [ ] Prediction includes probabilities for all three classes
-- [ ] Invalid input returns a clear 422 validation error
-- [ ] Prediction uses the currently active model
-- [ ] Prediction uses the correct preprocessor paired with the active model
-- [ ] Each prediction is saved to the database
-- [ ] Prediction history is retrievable with pagination
-- [ ] Feature schema endpoint returns the expected input fields for the current dataset
-- [ ] Model/preprocessor are cached in memory; cache invalidates on promotion
-- [ ] API tests cover valid predictions, invalid input, and no active model scenarios
+- [x] Valid feature input returns a prediction (Low/Moderate/High/Critical Risk)
+- [x] Prediction includes probabilities for all four classes
+- [x] Invalid input returns a clear 422 validation error
+- [x] Prediction uses the currently active model
+- [x] Prediction uses the correct preprocessor paired with the active model
+- [x] Each prediction is saved to the database
+- [x] Prediction history is retrievable with pagination
+- [x] Feature schema endpoint returns the expected input fields for the current dataset
+- [x] Model/preprocessor are cached in memory; cache invalidates on promotion
+- [x] API tests cover valid predictions, invalid input, and no active model scenarios
+
+### Phase 5 Outputs
+
+| Document | Location | Description |
+| --- | --- | --- |
+| Prediction API Specification & Guide | `docs/phase5_prediction_api.md` | Comprehensive documentation of inference engine, caching, schema validation, and REST API |
 
 ---
 

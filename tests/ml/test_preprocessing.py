@@ -1,9 +1,15 @@
+import os
 import pandas as pd
 import numpy as np
 import pytest
 
 from ml.schema import MODEL_FEATURES
-from ml.pipeline.preprocessing import build_linear_preprocessor, build_tree_preprocessor
+from ml.pipeline.preprocessing import (
+    build_linear_preprocessor,
+    build_tree_preprocessor,
+    save_preprocessor,
+    load_preprocessor,
+)
 from ml.pipeline.target_encoding import TargetEncoderWrapper
 
 def test_linear_preprocessor_imputes_and_scales(sample_raw_df, adapter):
@@ -85,3 +91,18 @@ def test_target_encoder_tree():
     # Critical (0), High (1), Low (2), Moderate (3)
     y_dec = enc.decode(y_enc)
     assert (y_dec == ["Low", "Moderate", "High", "Critical"]).all()
+
+def test_preprocessor_serialization_roundtrip(sample_raw_df, adapter, tmp_path):
+    X, _, _ = adapter.transform(sample_raw_df)
+    prep = build_linear_preprocessor(MODEL_FEATURES)
+    X_transformed_orig = prep.fit_transform(X)
+
+    save_path = str(tmp_path / "preprocessor.joblib")
+    saved_file = save_preprocessor(prep, save_path)
+    assert os.path.exists(saved_file)
+
+    loaded_prep = load_preprocessor(saved_file)
+    X_transformed_loaded = loaded_prep.transform(X)
+
+    np.testing.assert_array_almost_equal(X_transformed_orig, X_transformed_loaded)
+

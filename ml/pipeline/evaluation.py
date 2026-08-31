@@ -46,14 +46,13 @@ def evaluate_model(
     Returns:
         EvaluationResult containing metrics and confusion matrix.
     """
-    # 1. Transform data
+    # 1. Transform features only using fitted preprocessor
     X_val = preprocessor.transform(X_val_raw)
-    y_val_encoded = target_encoder.fit_transform(y_val_raw) # fit_transform is safe here as it just maps
     
-    # 2. Predict
+    # 2. Predict encoded class indices/values
     y_pred_encoded = trained_model.model.predict(X_val)
     
-    # 3. Decode predictions back to original string labels for consistent evaluation
+    # 3. Decode predictions back to canonical string labels for evaluation
     y_pred_decoded = target_encoder.decode(y_pred_encoded)
     
     # 4. Calculate metrics (using the string labels)
